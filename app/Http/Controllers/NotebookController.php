@@ -11,7 +11,7 @@ use App\Http\Requests\NotebookRequest;
  *      title="Notebook API Documentation",
  *      description="API Documentation for managing notebooks",
  *      @OA\Contact(
- *          email="developer@example.com"
+ *          email="mark3wich@yandex.ru"
  *      )
  * )
  */
