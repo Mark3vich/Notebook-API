@@ -1,0 +1,400 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Notebook API Documentation",
+        "description": "API Documentation for managing notebooks",
+        "contact": {
+            "email": "developer@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/notebook": {
+            "get": {
+                "tags": [
+                    "Notebooks"
+                ],
+                "summary": "Get list of notebooks",
+                "operationId": "3278597f70ffcf3df60a694e0ff0d1c1",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of notebooks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Notebook"
+                                            }
+                                        },
+                                        "current_page": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "last_page": {
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 50
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Notebooks"
+                ],
+                "summary": "Create a new notebook",
+                "operationId": "f737e96f4910ff283e75bc7e05c8379f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "full_name",
+                                    "phone",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "full_name": {
+                                        "description": "Full name of the notebook owner",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email of the notebook owner",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "Phone number of the notebook owner",
+                                        "type": "string"
+                                    },
+                                    "date_of_birth": {
+                                        "description": "Date of birth",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "company": {
+                                        "description": "Company name",
+                                        "type": "string"
+                                    },
+                                    "photo": {
+                                        "description": "Profile photo",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Notebook created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Notebook"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/notebook/{id}": {
+            "get": {
+                "tags": [
+                    "Notebooks"
+                ],
+                "summary": "Get a single notebook by ID",
+                "operationId": "a07418b0decb4969394e79f597aa543f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the notebook",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notebook details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Notebook"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Notebook not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Notebook not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Notebooks"
+                ],
+                "summary": "Update an existing notebook",
+                "operationId": "36d82d17bc829073e309f8316e61a7b1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the notebook to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "full_name",
+                                    "phone",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "full_name": {
+                                        "description": "Full name of the notebook owner",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email of the notebook owner",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "Phone number of the notebook owner",
+                                        "type": "string"
+                                    },
+                                    "date_of_birth": {
+                                        "description": "Date of birth",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "company": {
+                                        "description": "Company name",
+                                        "type": "string"
+                                    },
+                                    "photo": {
+                                        "description": "New profile photo (optional)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Notebook updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Notebook"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Notebook not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Notebook not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Notebooks"
+                ],
+                "summary": "Delete a notebook",
+                "operationId": "6be314584e9cc2d22f7dff1d0b286f21",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the notebook to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notebook deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Notebook deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Notebook not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Notebook not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "NotebookRequest": {
+                "required": [
+                    "full_name",
+                    "phone",
+                    "email"
+                ],
+                "properties": {
+                    "full_name": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "company": {
+                        "type": "string",
+                        "example": "Tech Corp"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "1234567890"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "john.doe@example.com"
+                    },
+                    "date_of_birth": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "1990-01-01"
+                    },
+                    "photo": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "https://example.com/photo.jpg"
+                    }
+                },
+                "type": "object"
+            },
+            "Notebook": {
+                "title": "Notebook",
+                "description": "Notebook Model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "full_name": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "company": {
+                        "type": "string",
+                        "example": "Tech Corp"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "1234567890"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "john.doe@example.com"
+                    },
+                    "date_of_birth": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "1990-01-01"
+                    },
+                    "photo": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "https://example.com/photo.jpg"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Notebooks",
+            "description": "Notebooks"
+        }
+    ]
+}
